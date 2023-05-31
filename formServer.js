@@ -1,15 +1,17 @@
 const express = require("express");
 const app = express();
 const axios = require("axios");
+const cors = require("cors");
+app.use(cors());
 
 require("dotenv").config();
 
 app.use(express.json());
 
 app.post("/createCard", async (req, res) => {
-  const { name, description, dueDate, startDate } = req.body;
+  const { name, description, startDate, dueDate } = req.body;
 
-  const url = `https://api.trello.com/1/cards?idList=${process.env.idList}&key=${process.env.apiKey}&token=${process.env.apiToken}&name=${name}&desc=${description}&due=${dueDate}&start=${startDate}`;
+  const url = `https://api.trello.com/1/cards?idList=${process.env.idList}&key=${process.env.apiKey}&token=${process.env.apiToken}&name=${name}&desc=${description}&start=${startDate}&due=${dueDate}`;
 
   try {
     const response = await axios.post(url);
